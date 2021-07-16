@@ -8,12 +8,12 @@ const Input = (props) => {
         style={styles.textInput}
         placeholder="Enter a goal..."
         value={props.goal}
-        onChangeText={props.handleGoalChange}
+        onChangeText={props.onChange}
         keyboardType="default"
       />
       <Button 
         title="Add"
-        onPress={props.handleGoalSubmit}
+        onPress={props.onAdd}
         accessibilityLabel="add new goal"
       />
     </View>

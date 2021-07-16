@@ -5,7 +5,6 @@ import Input from './components/Input.js';
 import GoalItem from './components/GoalItem.js';
 
 
-
 const App = () => {
   const [goal, setGoal] = useState('');
   const [allGoals, setAllGoals] = useState([]);
@@ -22,6 +21,11 @@ const App = () => {
     }
   }
 
+  const handleGoalDelete = (goalId) => {
+    setAllGoals(currentGoals => currentGoals.filter((goal) => goal.id !== goalId));
+  }
+
+  
 
   return (
     <View style={styles.screen}>
@@ -29,15 +33,18 @@ const App = () => {
       <Text style={styles.title}>Goals App</Text>
       <Input 
         goal={goal}
-        handleGoalChange={handleGoalChange}
-        handleGoalSubmit={handleGoalSubmit}
+        onChange={handleGoalChange}
+        onAdd={handleGoalSubmit}
       />
       {(allGoals.length >= 1) && <Text style={styles.subTitle}>Goals</Text>}
       <FlatList 
         data={allGoals}
         keyExtractor={(goal, index) => goal.id}
         renderItem={goal => 
-          <GoalItem goal={goal.item.value} />
+          <GoalItem 
+            goalObject={goal.item} 
+            onDelete={handleGoalDelete}
+          />
         }
       />
 
@@ -60,7 +67,7 @@ const styles = StyleSheet.create({
 
   subTitle: {
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 20,
     textAlign: 'center',
     marginTop: 15,
     color: '#24a0ed',
