@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, TextInput, Button, StyleSheet, Modal, Text } from 'react-native';
 
+
 const Input = (props) => {
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputBox}>
-        <Text style={styles.title}>Add new task</Text>
+        <Text style={styles.title}>New Task</Text>
         <TextInput 
           style={styles.textInput}
           placeholder="Enter a goal..."

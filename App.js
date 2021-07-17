@@ -70,7 +70,7 @@ const App = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 50,
+    padding: 40,
     justifyContent: 'space-between',
   },
 
