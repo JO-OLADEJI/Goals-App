@@ -42,6 +42,7 @@ const App = () => {
           goal={goal}
           onChange={handleGoalChange}
           onAdd={handleGoalSubmit}
+          onCancel={() => setModalInput(false)}
           visible={modalInput}
         />
         <FlatList 
@@ -57,6 +58,7 @@ const App = () => {
       </View>
       <Button
         title="add task"
+        color="#24a0ed"
         onPress={() => setModalInput(true)}
       />
 
