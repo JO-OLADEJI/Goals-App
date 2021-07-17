@@ -1,13 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, Button } from 'react-native';
 import Input from './components/Input.js';
 import GoalItem from './components/GoalItem.js';
+import ListImg from './assets/list.png';
 
 
 const App = () => {
   const [goal, setGoal] = useState('');
   const [allGoals, setAllGoals] = useState([]);
+  const [modalInput, setModalInput] = useState(false);
 
   // event handlers
   const handleGoalChange = (text) => {
@@ -18,6 +20,7 @@ const App = () => {
     if (goal !== '') {
       setAllGoals(currentGoals => [...currentGoals, { 'id': Math.random().toString(), 'value': goal }]);
       setGoal('');
+      setModalInput(false);
     }
   }
 
@@ -25,27 +28,36 @@ const App = () => {
     setAllGoals(currentGoals => currentGoals.filter((goal) => goal.id !== goalId));
   }
 
-  
+
 
   return (
     <View style={styles.screen}>
 
-      <Text style={styles.title}>Goals App</Text>
-      <Input 
-        goal={goal}
-        onChange={handleGoalChange}
-        onAdd={handleGoalSubmit}
-      />
-      {(allGoals.length >= 1) && <Text style={styles.subTitle}>Goals</Text>}
-      <FlatList 
-        data={allGoals}
-        keyExtractor={(goal, index) => goal.id}
-        renderItem={goal => 
-          <GoalItem 
-            goalObject={goal.item} 
-            onDelete={handleGoalDelete}
-          />
-        }
+      <View>
+        <View style={styles.heading}>
+          <Image source={ListImg} style={styles.icon} />
+          <Text style={styles.title}>Todo-List</Text>
+        </View>
+        <Input 
+          goal={goal}
+          onChange={handleGoalChange}
+          onAdd={handleGoalSubmit}
+          visible={modalInput}
+        />
+        <FlatList 
+          data={allGoals}
+          keyExtractor={(goal, index) => goal.id}
+          renderItem={goal => 
+            <GoalItem 
+              goalObject={goal.item} 
+              onDelete={handleGoalDelete}
+            />
+          }
+        />
+      </View>
+      <Button
+        title="add task"
+        onPress={() => setModalInput(true)}
       />
 
       <StatusBar style="auto" />
@@ -55,14 +67,21 @@ const App = () => {
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1,
     padding: 50,
+    justifyContent: 'space-between',
+  },
+
+  heading: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
   },
 
   title: {
     fontWeight: 'bold',
     fontSize: 30,
-    textAlign: 'center',
-    marginBottom: 10,
   }, 
 
   subTitle: {
@@ -71,6 +90,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 15,
     color: '#24a0ed',
+  },
+
+  icon: {
+    width: 25,
+    height: 25,
+    marginRight: 10,
   }
 });
 
